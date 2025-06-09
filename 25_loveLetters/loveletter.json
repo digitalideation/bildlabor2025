@@ -1,0 +1,12 @@
+
+{
+    "start":"$hello $darling.cap() % $love % $by",
+    "hello":"Darling | Dear | Honey | Jewel | Sweet",
+    "darling":"duck | love | moppet | sweetheart",
+    "love": "You are my $adjective $noun. %My $adjective $noun $adverb $verbs. %Your $adjective $noun. ",
+    "by":"Yours $adverb % M.U.C.",
+    "adjective":"adorable | affectionate | amorous | anxious | ardent | avid | breathless | burning | covetous | craving | curious | darling | dear | devoted | eager | erotic | fervent | fond | impatient | keen | little | loveable | lovesick | loving | passionate | precious | sweet | sympathetic | tender | unsatisfied | wistful",
+    "noun":"adoration | affection | ambition | appetite | ardour | charm | desire | devotion | eagerness | enchantment | enthusiasm | fancy | fellow feeling | fervour | fondness | heart | hunger | infatuation | liking | longing | love | lust | passion | rapture | sympathy | tenderness | thirst | wish | yearning",
+    "verbs":"adores | attracts | cares for | cherishes | clings to | desires | holds dear | hopes for | hungers for | is wedded to | likes | longs for | loves | lusts after | pants for | pines for | prizes | sighs for | tempts | thirsts for | treasures | wants | wishes | woos | yearns for",
+    "adverb":"affectionately | anxiously | ardently | avidly | beautifully | breathlessly | burningly | covetously | curiously | devotedly | eagerly | fervently | fondly | impatiently | keenly | lovingly | passionately | seductively |tenderly | winningly | wistfully"
+}

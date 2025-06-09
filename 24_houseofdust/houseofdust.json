@@ -1,0 +1,8 @@
+
+{
+    "start":"A house of $material %  \t $place % \t \t Using  $lightsource %  \t \t \t Inhabited by $inhabitants",
+    "material":"sand | dust | leaves | paper | tin | roots | brick | stone | discarded clothing | glass | steel | plastic | mud | broken dishes | wood | straw | weeds",
+    "place":"In a green, mossy terrain | In an overpopulated area | By the sea | By an abandoned lake | In a desert | In a deserted factory | In dense woods | In Japan | Among small hills | In southern France | Among high mountains | On an island | On open ground | In a cold | windy climate | In a place with both heavy rain and bright sun | In a deserted airport | In a hot climate | Inside a mountain | On the sea | In Michigan | In heavy jungle undergrowth | By a river | Among other houses | In a deserted church | In a metropolis | Underwater",
+    "lightsource": "candles | all available lighting | electricity | natural light",
+    "inhabitants":"people who sleep very little | vegetarians | horses and birds | people speaking many languages wearing little or no clothing | all races of men represented wearing predominantly red clothing | children and old people | various birds and fish | lovers | people who enjoy eating together | people who eat a great deal | collectors of all types | friends and enemies | people who sleep almost all the time | very tall people | American Indians | little boys | people from many walks of life | Negroes wearing all colors | friends | French and German speaking people | fishermen and families | people who love to read"
+}
