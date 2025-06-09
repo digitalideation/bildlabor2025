@@ -5,55 +5,72 @@ After Daniel Shiffman Processing Example https://www.youtube.com/watch?v=0L2n8Tg
 */
 
 let original;
-let shaderImg;
 let newImage;
 
+//Create a GUI
+let params = {
+  scaleFactor: 2,
+  steps: 1, //number of steps for the color reduction
+  triggerAction: exportPNG
+};
 
-// Scale factor
-let sc=2;
 
-let n=4;
+
+let n = 4;
 
 //Error Verteilung, randomError[0] Floyd-Steinberg
-let randomError={
-  0: [7,3,5,1],//classic Floyd-Steinberg
-  1: [0,0,0,16],//some other error distributions
-  2: [12,2,2,0],
-  3: [4,4,4,4],
-  4: [16,0,0,0],
-  5: [8,0,0,8]
- }
+let randomError = {
+  0: [7, 3, 5, 1],//classic Floyd-Steinberg
+  1: [0, 0, 0, 16],//some other error distributions
+  2: [12, 2, 2, 0],
+  3: [4, 4, 4, 4],
+  4: [16, 0, 0, 0],
+  5: [8, 0, 0, 8]
+}
 
- let rnd=0;//random Error Schlüssel
+let rnd = 0;//random Error Schlüssel
 
 function preload() {
   original = loadImage("hanna-v3.jpg");
-
-  
 }
 
 function setup() {
-  createCanvas(original.width*2, original.height*2);
+  createCanvas(original.width * params.scaleFactor, original.height * params.scaleFactor);
   // Set pixel density to 1 so the resulting image is the same size as the original
   pixelDensity(1);
-  rnd=int(random(0, Object.keys(randomError).length));
-  console.log(randomError[rnd]);
-  // Create a new image with scaled dimensions
-  newImage = createGraphics(original.width, original.height);
+  // select a random error distribution
+  rnd = int(random(0, Object.keys(randomError).length));
+
+  // if you want to use a specific error distribution, set rnd to the desired key
+  // rnd = 0; // Floyd-Steinberg
+
+  //make the original image smaller to improve performance
+  original.resize(round(original.width / params.scaleFactor), round(original.height / params.scaleFactor));
+
+
+
+  // Setup GUI
+  const gui = new dat.GUI();
+  gui.add(params, 'triggerAction').name("Export Image"); // ✅ This creates a button
+
+  init();
+}
+
+function init() {
+  background(255);
+
+  // Create a new image with the same size as the original, but scaled by the scale factor
+  newImage = createGraphics(original.width * params.scaleFactor, original.height * params.scaleFactor);
   newImage.background(255);
   newImage.noStroke();
   newImage.pixelDensity(1);
 
-  // Scale the original image to improve performance
-  original.resize(round(original.width/sc), round(original.height/sc));
-  image(original, 0 , 0);
   // Apply the dithering effect, the second parameter is the number of steps regarding the color
   // The higher the number, the more colors will be used
   // 1 is actually two steps, either 0 or 255, this means full color or zero
-  makeDithered(original, 2);
-  
-  image(newImage, original.width, 0, original.width*sc*2, original.height*sc*2);
+  makeDithered(original, params.steps);
 
+  image(newImage, 0, 0, newImage.width, newImage.height);
 
 }
 
@@ -83,7 +100,7 @@ function setColorAtIndex(img, x, y, clr) {
   let idx = imageIndex(img, x, y);
 
   let pix = img.pixels;
-  
+
   pix[idx] = red(clr);
   pix[idx + 1] = green(clr);
   pix[idx + 2] = blue(clr);
@@ -112,7 +129,7 @@ function makeDithered(img, steps) {
       let oldG = green(clr);
       let oldB = blue(clr);
 
-      let brightness = (0.299*oldR + 0.587*oldG + 0.114 * oldB) ;
+      let brightness = (0.299 * oldR + 0.587 * oldG + 0.114 * oldB);
       let newBrightness = closestStep(255, steps, brightness);
       let newR = closestStep(255, steps, oldR);
       let newG = closestStep(255, steps, oldG);
@@ -120,11 +137,10 @@ function makeDithered(img, steps) {
 
       let newClr = color(newR, newG, newB);
 
-      //setColorAtIndex(newImage, x, y, newClr);
 
-      drawDot(x,y,newClr)
+      drawDot(x, y, newClr)
 
-      //drawDot(x,y,color(newBrightness));
+
 
       //difference between old and new color
       let errR = oldR - newR;
@@ -136,7 +152,7 @@ function makeDithered(img, steps) {
   }
 
   img.updatePixels();
-  
+
   //newImage.updatePixels();
 }
 
@@ -144,11 +160,8 @@ function makeDithered(img, steps) {
 // https://en.wikipedia.org/wiki/Floyd%E2%80%93Steinberg_dithering
 
 function distributeError(img, x, y, errR, errG, errB) {
-  let idx = imageIndex(img, x, y);
-  let pos={x:x,y:y};
-  //if(y%2==0){
-   // pos=xyFromIndex(img, idx+img.width*2);
-  //}
+  let pos = { x: x, y: y };
+
   //Pixel at x+1, y (right)
   addError(img, randomError[rnd][0] / 16.0, pos.x + 1, pos.y, errR, errG, errB);
   //Pixel at x-1, y+1 (left down)
@@ -159,10 +172,7 @@ function distributeError(img, x, y, errR, errG, errB) {
   addError(img, randomError[rnd][3] / 16.0, pos.x + 1, pos.y + 1, errR, errG, errB);
 
 
-  //misuse the error diffusion for some random effect
-  //pixel right down gets the full error
-  
-  //addError(img, 16.0 / 16.0, x + 1, y + 1, errR, errG, errB);
+
 }
 
 function addError(img, factor, x, y, errR, errG, errB) {
@@ -178,27 +188,27 @@ function addError(img, factor, x, y, errR, errG, errB) {
   setColorAtIndex(img, x, y, clr);
 }
 
-function drawDot(x,y,c){
+function drawDot(x, y, c) {
   newImage.fill(c);
- 
-  let brightness = (0.299*red(c) + 0.587*green(c) + 0.114 * blue(c)) ;
 
-  let pos={x:x,y:y};
-  
- 
-/*
-  let idx = imageIndex(newImage, x, y);
-  let xshift=sin(idx/10)*noise(x/10)*n; //add some noise
-  let yshift=cos(frameCount/10)*noise(idx/20, sin(frameCount))*n; //add some noise
-  
- 
-  if(y%4==0){
-    pos.x+=xshift;
-  }*/
- 
-  let d=map(brightness,0,255,sc*2,0);
-  //add some noise
-  //newImage.ellipse(pos.x*sc,pos.y*sc,d,d/2);
-  newImage.rect(pos.x*sc,pos.y*sc,d,d/2);
+  let brightness = (0.299 * red(c) + 0.587 * green(c) + 0.114 * blue(c));
+
+  let pos = { x: x, y: y };
+
+
+
+  if (brightness < 200) {
+    let d = map(brightness, 0, 255, params.scaleFactor, 0);//the darker the color, the bigger the dot, white is to zero
+    newImage.rect(pos.x * params.scaleFactor, pos.y * params.scaleFactor, d, d);
+
+  }
 }
 
+
+
+function exportPNG() {
+  let d = new Date();
+  /* ~~~~~~~~~~~~ export PNG */
+  save(d + ".png")
+  noLoop();
+}
