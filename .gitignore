@@ -1,2 +1,5 @@
 .DS_Store
 .vscode/
+
+16_video_slitscan/assets/*
+16_video_slitscan_simple/assets/*
