@@ -5,8 +5,10 @@ let x = 0;
 let slitSlider;
 let btn;
 
+let scale = 2; //scale the copied part to make it larger
+
 function setup() {
-  createCanvas(800, 240);
+  createCanvas(windowWidth, windowHeight);
   pixelDensity(1);
   video = createCapture(VIDEO);
   video.size(320, 240);
@@ -14,7 +16,7 @@ function setup() {
 
   slitSlider = createSlider(1, 5, 2);
   slitSlider.position(10, 10);
-
+  text('Slit Width', 10, 30);
 
   btn = createButton('save');
   btn.position(10, 40);
@@ -32,7 +34,7 @@ function draw() {
 
   let slit = slitSlider.value();
 
-  copy(video, w/2, 0, slit, h, x, 0, slit, h);
+  copy(video, w/2, 0, slit, h, x*scale, 0, slit*scale, h*scale);
 
   x = x + slit;
   
