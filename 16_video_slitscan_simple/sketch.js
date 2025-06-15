@@ -13,7 +13,7 @@ function setup() {
   video = createVideo(
     'assets/tarkowski.mov'
   );
-  video.size(480, 270);
+  //video.size(480, 270);
   video.hide();
   video.loop();
   //video.showControls();

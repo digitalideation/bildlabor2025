@@ -1,0 +1,8 @@
+{
+  "start":    "Ich $verb1 auch alle % $object1 meine $object2 % $verb2 kleine $object3",
+  "object1":   "Arme | Adern | Flecken | Sehnen | Knochen | Wärme",
+  "object2":   " | Knoten | Zeichnung | Oberfläche | Gegenstand | Netz",
+  "object3":   "Modell | Gegenstand | Alter",
+  "verb1":     "packe | streichle | glänze | atme | altere | schmücke | drehe",
+  "verb2":     "warte | berühre | umfasse | drücke"
+}

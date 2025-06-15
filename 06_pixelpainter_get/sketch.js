@@ -1,4 +1,5 @@
 let img;
+
 function preload(){
   img = loadImage('assets/Nemo.jpeg');
 
